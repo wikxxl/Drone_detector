@@ -222,7 +222,7 @@ git clone https://github.com/YOUR_REPO/bruce-drone-modules.git
 ### 2. Copy to Bruce Project
 
 ```bash
-cp nrf_radar.cpp nrf_radar.h /path/to/Bruce/src/modules/rf/
+cp nrf_radar.cpp nrf_radar.h /path/to/Bruce/src/modules/nrf24/
 cp drone_hunter.cpp drone_hunter.h /path/to/Bruce/src/modules/wifi/
 ```
 
@@ -232,7 +232,7 @@ Add to the appropriate Bruce menu file:
 
 ```cpp
 // In RF menu:
-#include "modules/rf/nrf_radar.h"
+#include "modules/nrf24/nrf_radar.h"
 // ...
 {"NRF Drone Radar", nrf_drone_radar},
 
