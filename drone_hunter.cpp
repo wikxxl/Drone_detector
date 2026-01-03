@@ -25,71 +25,39 @@ const DroneOUI drone_database[] = {
 	{{0x04, 0xA8, 0x5A}, "DJI", "Mavic 3/Air 3/Mini 4"},
 	{{0x0C, 0x9A, 0xE6}, "DJI", "New models (2025)"},
 	{{0x34, 0xD2, 0x62}, "DJI", "Mavic 2/Phantom 4"},
-	{{0x48, 0x1C, 0xB9}, "DJI", "Mini 2/Mini 3"},
-	{{0x4C, 0x43, 0xF6}, "DJI", "New models (2025)"},
-	{{0x58, 0xB8, 0x58}, "DJI", "RC Controllers"},
-	{{0x88, 0x29, 0x85}, "DJI", "Enterprise Series"},
-	{{0x8C, 0x58, 0x23}, "DJI", "New models (2025)"},
-	{{0xE4, 0x7A, 0x2C}, "DJI", "Avata/FPV Series"},
-	{{0x44, 0x44, 0xDA}, "DJI BAIWANG", "Mini Series"},
+	//etc.....
 
 	// Parrot
 	{{0x00, 0x12, 0x1C}, "PARROT", "AR.Drone/Bebop/Anafi"},
-	{{0x00, 0x26, 0x7E}, "PARROT", "AR.Drone 2.0/Bebop 2"},
-	{{0x90, 0x03, 0xB7}, "PARROT", "Disco/Mambo/Swing"},
-	{{0x90, 0x3A, 0xE6}, "PARROT", "Anafi/Anafi USA"},
-	{{0xA0, 0x14, 0x3D}, "PARROT", "Bebop/Disco FPV"},
+	// etc.....
 
 	// Autel & Skydio
 	{{0xEC, 0x5B, 0xCD}, "AUTEL", "EVO I/II/Max"},
-	{{0x8C, 0xDE, 0xF9}, "AUTEL", "EVO Lite/Nano"},
-	{{0x38, 0x1D, 0x14}, "SKYDIO", "Skydio 2/X2"},
+	//etc
 
 	// Xiaomi / FIMI
 	{{0x64, 0xCC, 0x2E}, "FIMI", "X8 SE/Mi Drone 4K"},
-	{{0x78, 0x11, 0xDC}, "FIMI", "A3/FIMI Mini"},
-	{{0x7C, 0x49, 0xEB}, "XIAOMI", "Mi Drone 1080P"},
-	{{0xF8, 0xA2, 0xD6}, "XIAOMI", "FIMI X8 SE"},
-	{{0x50, 0xEC, 0x50}, "FIMI", "Palm/X8 Mini"},
 
 	// Yuneec
 	{{0x00, 0xE0, 0x6D}, "YUNEEC", "Typhoon H/H520"},
-	{{0x60, 0x01, 0x94}, "YUNEEC", "Mantis Q/Breeze"},
+	
 
 	// Hubsan & Holy Stone
 	{{0xE8, 0xAB, 0xFA}, "HUBSAN", "Zino/Pro/Mini"},
-	{{0x48, 0x3F, 0xDA}, "HUBSAN", "H501S/H117S"},
-	{{0x48, 0x57, 0x02}, "HOLY STONE", "HS100/700/720"},
-	{{0xAC, 0x0B, 0xFB}, "HOLY STONE", "HS120D/270"},
+	//etc.......
 
 	// Budget & Others
 	{{0x94, 0xE9, 0x79}, "POTENSIC", "Dreamer/D88/T25"},
 	{{0xDC, 0x0D, 0x30}, "RUKO", "F11 Pro/U11 Pro"},
-	{{0x34, 0x94, 0x54}, "SNAPTAIN", "SP7100/SP650"},
-	{{0x18, 0xFE, 0x34}, "SYMA", "X8 Pro/X500/W1"},
-	{{0x24, 0x62, 0xAB}, "EACHINE", "EX5/E520S"},
-	{{0xB4, 0xE6, 0x2D}, "EACHINE", "E58/E520"},
-	{{0x00, 0x1D, 0xDF}, "WALKERA", "Voyager/Vitus"},
-	{{0x44, 0x33, 0x4C}, "WINGSLAND", "S6/K3"},
-	{{0x98, 0x66, 0x10}, "ZEROTECH", "Dobby/Hesper"},
-	{{0xBC, 0x6A, 0x16}, "EHANG", "Ghostdrone/184"},
-	{{0xD4, 0xD9, 0x19}, "GOPRO", "Karma"},
-	{{0x00, 0x1A, 0x2C}, "3DR", "Solo/Iris+"},
-	{{0x24, 0x0A, 0xC4}, "POWERVISION", "PowerEgg/PowerEye"},
-	{{0x00, 0x80, 0x91}, "SENSEFLY", "eBee/Albris"},
-	{{0x84, 0xF3, 0xEB}, "BETAFPV", "Cetus/Meteor"},
-	{{0xA4, 0xCF, 0x12}, "EMAX", "Tinyhawk/Nanohawk"},
+	///etc.........
 
 	// DIY & Modules (Espressif)
 	{{0x24, 0x0A, 0xC4}, "DIY (ESP)", "ESP8266/32 Drone"},
-	{{0x30, 0xAE, 0xA4}, "DIY (ESP)", "ESP32 Drone"},
-	{{0xBC, 0xDD, 0xC2}, "DIY (ESP)", "ESP32 Drone"},
-	{{0xCC, 0x50, 0xE3}, "DIY (ESP)", "ESP Module Drone"},
+	
 
 	// Remote ID & FPV Goggles
 	{{0xC8, 0x8D, 0x83}, "FATSHARK", "HDO/Scout"},
-	{{0x00, 0x0E, 0x8F}, "ORQA", "FPV.One Goggles"},
-	{{0x00, 0x1B, 0x44}, "DRONETAG", "RemoteID Module"}
+	//etc....
 };
 const int db_size = sizeof(drone_database) / sizeof(drone_database[0]);
 
@@ -478,3 +446,4 @@ void wifi_drone_hunter() {
     drone_hunter_setup();
     drone_hunter_loop();
 }
+
