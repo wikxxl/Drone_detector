@@ -2,6 +2,8 @@
 
 A set of drone detection and analysis modules for [Bruce](https://github.com/pr3y/Bruce) firmware on ESP32.
 
+**Target Hardware:** ESP32-2432S028 **CYD (Cheap Yellow Display)** – a $10 ESP32 board with built-in 2.8" TFT display.
+
 > ⚠️ **LEGAL DISCLAIMER**: These modules are intended solely for educational purposes and security research. Using jamming functions and Remote ID cloning is **illegal** in most countries. Users bear full responsibility for compliance with local regulations.
 
 ---
@@ -178,36 +180,92 @@ Module for detecting commercial drones broadcasting **Remote ID** signals (ASTM 
 
 ## 🔧 Hardware Requirements
 
+### Recommended Board: CYD (Cheap Yellow Display)
+
+These modules are designed and tested for the **ESP32-2432S028** board, commonly known as **CYD (Cheap Yellow Display)** or **Yellow Board**.
+
+| Specification | Value |
+|---------------|-------|
+| **MCU** | ESP32-WROOM-32 (dual-core 240MHz) |
+| **Display** | 2.8" ILI9341 TFT 320x240 (resistive touch) |
+| **Flash** | 4MB |
+| **PSRAM** | None (standard) / 8MB (R version) |
+| **SD Card** | MicroSD slot |
+| **USB** | Micro-USB (CH340 or CP2102) |
+| **RGB LED** | WS2812 onboard |
+| **LDR** | Light sensor |
+
+**Available variants:**
+- `ESP32-2432S028` – Standard (no PSRAM)
+- `ESP32-2432S028R` – With 8MB PSRAM
+- `ESP32-2432S032` – 3.2" display version
+
+**Where to buy:** AliExpress, Amazon (~$10-15 USD)
+
+```
+┌─────────────────────────────────────────┐
+│           CYD PINOUT (top view)         │
+├─────────────────────────────────────────┤
+│                                         │
+│   ┌───────────────────────────┐         │
+│   │                           │         │
+│   │      2.8" TFT DISPLAY     │         │
+│   │         320 x 240         │         │
+│   │                           │         │
+│   └───────────────────────────┘         │
+│                                         │
+│  [USB]                      [SD CARD]   │
+│                                         │
+│  P1 Header:                P3 Header:   │
+│  GND, NC, NC, IO35         IO21, IO22   │
+│                            IO17, IO16   │
+│  P3 (active pins):                      │
+│  IO22 (SCL), IO21 (SDA)    ← I2C        │
+│  IO27, IO16, IO17          ← NRF24      │
+│                                         │
+│  CN1 Connector:                         │
+│  IO16, IO17, IO25, IO26    ← Extended   │
+│  IO32, IO33, GND, 3.3V                  │
+│                                         │
+└─────────────────────────────────────────┘
+```
+
+---
+
 ### NRF Drone Radar
 
 | Component | Requirements |
 |-----------|--------------|
-| **MCU** | ESP32 (supported by Bruce) |
+| **MCU** | ESP32 CYD (ESP32-2432S028) |
 | **Radio** | NRF24L01+ or NRF24L01+PA+LNA |
 | **Antenna** | External 2.4GHz recommended |
 | **SD Card** | Optional (for logging) |
 
-**NRF24L01 Wiring:**
+**NRF24L01 Wiring for CYD:**
 
 ```
-NRF24L01    ESP32
-────────    ─────
-VCC    →    3.3V
-GND    →    GND
-CE     →    GPIO (Bruce config)
-CSN    →    GPIO (Bruce config)
-SCK    →    GPIO18 (VSPI_CLK)
-MOSI   →    GPIO23 (VSPI_MOSI)
-MISO   →    GPIO19 (VSPI_MISO)
-IRQ    →    (optional)
+NRF24L01        CYD (P3/CN1 Header)
+────────        ───────────────────
+VCC        →    3.3V
+GND        →    GND
+CE         →    GPIO27 (active P3 pin)
+CSN        →    GPIO17 (P3/CN1)
+SCK        →    GPIO18 (directly on ESP32)
+MOSI       →    GPIO23 (directly on ESP32)
+MISO       →    GPIO19 (directly on ESP32)
+IRQ        →    (optional - not used)
 ```
+
+> **Note:** On CYD, SPI pins (18, 19, 23) are shared with the TFT display. NRF24 works alongside the display using software CS management. Pins GPIO16/17/27 are exposed on the P3 connector.
 
 ### WiFi Drone Hunter
 
 | Component | Requirements |
 |-----------|--------------|
-| **MCU** | ESP32 with WiFi |
-| **Antenna** | Built-in or external 2.4GHz |
+| **MCU** | ESP32 CYD (built-in WiFi, no extra hardware needed) |
+| **Antenna** | Built-in PCB antenna (external via U.FL optional) |
+
+> **Note:** WiFi Drone Hunter uses only the ESP32's internal WiFi radio – no additional modules required. The CYD's built-in antenna provides sufficient range for nearby drone detection.
 
 ---
 
@@ -242,12 +300,25 @@ Add to the appropriate Bruce menu file:
 {"Drone Hunter", wifi_drone_hunter},
 ```
 
-### 4. Compile
+### 4. Compile for CYD
 
 ```bash
-pio run -e YOUR_BOARD
-pio run -e YOUR_BOARD --target upload
+# For CYD 2.8" (ESP32-2432S028)
+pio run -e cyd
+
+# Upload to board
+pio run -e cyd --target upload
+
+# Monitor serial output
+pio device monitor -b 115200
 ```
+
+**Alternative via Arduino IDE:**
+1. Install ESP32 board package
+2. Select: `ESP32 Dev Module`
+3. Flash Size: `4MB (32Mb)`
+4. Partition Scheme: `Default 4MB with spiffs`
+5. Upload Speed: `921600`
 
 ---
 
@@ -353,6 +424,8 @@ MIT License – See LICENSE file
 - [Bruce Firmware](https://github.com/pr3y/Bruce) – Main project
 - [RF24 Library](https://github.com/nRF24/RF24) – NRF24L01 library
 - [ASTM F3411](https://www.astm.org/f3411-22a.html) – Remote ID standard
+- [CYD Documentation](https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display) – Cheap Yellow Display resources & pinouts
+- [ESP32-2432S028 Schematic](https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display/blob/main/cyd.md) – Hardware reference
 
 ---
 
